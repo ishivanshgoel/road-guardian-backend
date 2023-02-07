@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { DoctorRepository } from "../repository";
 import { IDoctor } from "../entity";
+
 export class DoctorController {
   private doctorRepository: DoctorRepository = new DoctorRepository();
 
@@ -11,6 +12,11 @@ export class DoctorController {
   ) => {
     try {
       const { email, password, name, address, specialization } = req.body;
+      if (!email || !password || !name || !address || !specialization) {
+        throw new Error(
+          "[email/ password/ name/ address/ specialization] is missing"
+        );
+      }
       await this.doctorRepository.registerDoctor(
         email,
         password,
@@ -34,6 +40,9 @@ export class DoctorController {
   ) => {
     try {
       const { email, password } = req.body;
+      if (!email || !password) {
+        throw new Error("[email/ password] is missing");
+      }
       const doctor: IDoctor = await this.doctorRepository.getDoctorByEmail(
         email
       );

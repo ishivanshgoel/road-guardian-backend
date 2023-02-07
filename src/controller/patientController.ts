@@ -12,6 +12,9 @@ export class PatientController {
   ) => {
     try {
       const { email, password, name, deviceId } = req.body;
+      if(!email || !password || !name || !deviceId) {
+        throw new Error("[email/ password/ name/ deviceId] is missing");
+      }
       await this.patientRepository.registerPatient(
         email,
         password,
@@ -34,6 +37,9 @@ export class PatientController {
   ) => {
     try {
       const { email, password } = req.body;
+      if(!email || !password) {
+        throw new Error("[email/ password] is missing");
+      }
       const patient: IPatient = await this.patientRepository.getPatientByEmail(
         email
       );
