@@ -65,4 +65,54 @@ export class PatientController {
       next(error);
     }
   };
+
+  public shareReportWithDoctor = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const { reportId, doctorId } = req.body;
+      const patientId = req["user"]["_id"];
+
+      if (!reportId || !doctorId || !patientId) {
+        throw new Error("[reportId/ doctorId/ patientId] is missing");
+      }
+
+      // service to share report with doctor
+
+      res.json({
+        error: false,
+        message: "report shared"
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public createNewReport = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const { predictedDisease } = req.body;
+      const patientId = req["user"]["_id"];
+
+      if (!patientId) {
+        throw new Error("[patientId] is missing");
+      }
+
+      // service to upload report to s3
+      // service to save patient report
+      
+      res.json({
+        error: false,
+        message: "report shared"
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
 }
