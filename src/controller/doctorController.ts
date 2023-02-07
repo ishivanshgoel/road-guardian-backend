@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { DoctorRepository } from "../repository";
 import { IDoctor } from "../entity";
+import { veriftyJwtToken, generateJwtToken } from "../util";
 
 export class DoctorController {
   private doctorRepository: DoctorRepository = new DoctorRepository();
@@ -54,10 +55,14 @@ export class DoctorController {
         throw new Error("Invalid email/ password");
       }
 
+      delete doctor.password;
+      const token = generateJwtToken(doctor);
+      doctor["token"] = token;
+
       res.json({
         error: false,
         message: "login success",
-        data: doctor,
+        doctor: doctor,
       });
     } catch (error) {
       next(error);
