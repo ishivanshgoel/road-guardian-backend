@@ -2,13 +2,18 @@ import { Doctor, Patient, PatientRegisteredWithDoctor, Report, Specilaization, I
 
 export class PatientRepository {
 
-    async registerPatient(name: string, deviceId: string) : Promise<IPatient> {
-        const newPatient = new Patient({ name, deviceId });
+    async registerPatient(email: string, password: string, name: string, deviceId: string) : Promise<IPatient> {
+        const newPatient = new Patient({ email, password, name, deviceId });
         await newPatient.save();
         return newPatient;
     }
 
-    async getPatient(patientId: string): Promise<IPatient> {
+    async getPatientByEmail(email: string): Promise<IPatient> {
+        const patient = await Patient.findOne({ email: email }).exec();
+        return patient;
+    }
+
+    async getPatientById(patientId: string): Promise<IPatient> {
         const patient = await Patient.findOne({ _id: patientId }).exec();
         return patient;
     }

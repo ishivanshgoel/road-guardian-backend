@@ -1,13 +1,24 @@
 import { model, Schema } from "mongoose";
 
 export interface IDoctor {
-    name: String;
-    address: String;
-    specialization: String;
+    email: string,
+    password:string,
+    name: string;
+    address: string;
+    specialization: string;
 }
 
 const doctor = new Schema<IDoctor>(
     {
+        email: {
+            type: String,
+            required: true,
+            unique: true
+        },
+        password: {
+            type: String,
+            required: true
+        },
         name: {
             type: String,
             required: true
