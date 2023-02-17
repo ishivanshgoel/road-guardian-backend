@@ -4,6 +4,7 @@ import { IPatient } from "../entity";
 import { veriftyJwtToken, generateJwtToken } from "../util";
 
 export class PatientController {
+
   private patientRepository: PatientRepository = new PatientRepository();
 
   public registerNewPatient = async (
@@ -75,11 +76,19 @@ export class PatientController {
       const { reportId, doctorId } = req.body;
       const patientId = req["user"]["_id"];
 
-      if (!reportId || !doctorId || !patientId) {
-        throw new Error("[reportId/ doctorId/ patientId] is missing");
+      if (!reportId || !doctorId) {
+        throw new Error("[reportId/ doctorId] is missing");
       }
 
-      // service to share report with doctor
+      const isPatientRegisteredUnderDoctor = await this.patientRepository.isPatientRegisteredUnderDoctor(patientId, doctorId);
+      if(!isPatientRegisteredUnderDoctor) {
+        throw new Error("Patient is not registered under this doctor");
+      }
+
+      const response = await this.patientRepository.shareReportWithDoctor(doctorId, patientId, reportId);
+      if(!response) {
+        throw new Error("Some error occured");
+      }
 
       res.json({
         error: false,
@@ -109,14 +118,14 @@ export class PatientController {
 
       res.json({
         error: false,
-        message: "report shared"
+        message: "report saved"
       });
     } catch (error) {
       next(error);
     }
   };
 
-  public getReports = async (
+  public getAllReports = async (
     req: Request,
     res: Response,
     next: NextFunction
@@ -128,11 +137,34 @@ export class PatientController {
         throw new Error("[patientId] is missing");
       }
 
-      // service to fetch all the reports of patient
-
+      const response = await this.patientRepository.getPatientReports(patientId);
       res.json({
         error: false,
-        message: "reports fetched"
+        message: "reports fetched",
+        data: response
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public getDoctorRemarksOnReports = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const patientId = req["user"]["_id"];
+
+      if (!patientId) {
+        throw new Error("[patientId] is missing");
+      }
+
+      const response = await this.patientRepository.getDoctorRemarkOnReport(patientId);
+      res.json({
+        error: false,
+        message: "doctor remarks fetched",
+        data: response
       });
     } catch (error) {
       next(error);
