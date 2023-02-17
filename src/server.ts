@@ -1,13 +1,19 @@
 import express from "express";
+import { doctorRouter, patientRouter } from "./router";
+import { DbConnector } from "./config/db";
 
 export class Server {
     private readonly app = express();
-    private PORT: Number;
+    private PORT: number;
 
-    constructor(PORT: Number) {
-        this.PORT = PORT;
-        this.putGlobalMiddleWares();
-        this.initiateRoutes();
+    constructor(PORT: number, dbUri: string) {
+        DbConnector.connect(dbUri).then(() => {
+            this.PORT = PORT;
+            this.putGlobalMiddleWares();
+            this.initiateRoutes();
+        }).catch((err) => {
+            console.log("Error " + err);
+        })
     }
 
     private putGlobalMiddleWares() {
@@ -16,9 +22,8 @@ export class Server {
     }
 
     private initiateRoutes() {
-        // this.app.use("/api/v1/book", BookController);
-        // this.app.use("/api/v1/user", UserController);
-        // this.app.use("/api/v1/auth", AuthController);
+        this.app.use("/api/v1/patient", patientRouter);
+        this.app.use("/api/v1/doctor", doctorRouter);
     }
 
     public start() {

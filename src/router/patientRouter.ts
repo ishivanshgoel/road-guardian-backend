@@ -11,4 +11,4 @@ router.route("/report/new").post(patientController.createNewReport);
 router.route("/report/all").get(patientController.getAllReports);
 router.route("/report/doctor-remarks").get(patientController.getDoctorRemarksOnReports);
 
-export { router as AuthController }
+export { router as patientRouter }

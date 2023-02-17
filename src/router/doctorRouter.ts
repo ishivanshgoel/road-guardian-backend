@@ -14,4 +14,4 @@ router.route("/all").get(doctorController.getAllDoctors);
 router.route("/registered-patients").get(doctorController.getRegisteredPatients);
 router.route("/request/all").get(doctorController.getNewPatientRequests);
 
-export { router as AuthController }
+export { router as doctorRouter }
