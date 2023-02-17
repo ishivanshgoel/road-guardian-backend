@@ -6,11 +6,11 @@ export function patientAuthMiddleware(req: Request, res: Response, next: NextFun
     if(!token) {
         next(new Error("token not found"));
     }
-    token = token[1];
+    token = token.split(" ")[1];
     const response = veriftyJwtToken(token);
     if(!response || !response.deviceId) {
         next(new Error("unauthorized user"));
     }
-    req["payload"] = response;
+    req["user"] = response;
     next();
 }

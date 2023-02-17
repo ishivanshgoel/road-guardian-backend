@@ -56,18 +56,19 @@ export class PatientController {
       patient.password = undefined;
 
       const payload = {
+        _id: patient["_id"],
         email: patient.email,
         name: patient.name,
         deviceId: patient.deviceId
       }
 
       const token = generateJwtToken(payload);
-      patient["token"] = token;
 
       res.json({
         error: false,
         message: "login success",
         data: patient,
+        token: token
       });
     } catch (error) {
       next(error);
