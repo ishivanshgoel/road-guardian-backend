@@ -98,14 +98,15 @@ export class PatientController {
     try {
       const { predictedDisease } = req.body;
       const patientId = req["user"]["_id"];
+      const deviceId = req["deviceId"];
 
-      if (!patientId) {
-        throw new Error("[patientId] is missing");
+      if (!patientId || !deviceId) {
+        throw new Error("[patientId/ deviceId] is missing");
       }
 
       // service to upload report to s3
       // service to save patient report
-      
+
       res.json({
         error: false,
         message: "report shared"
@@ -115,4 +116,26 @@ export class PatientController {
     }
   };
 
+  public getReports = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const patientId = req["user"]["_id"];
+
+      if (!patientId) {
+        throw new Error("[patientId] is missing");
+      }
+
+      // service to fetch all the reports of patient
+
+      res.json({
+        error: false,
+        message: "reports fetched"
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
 }

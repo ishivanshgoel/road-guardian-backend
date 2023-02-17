@@ -3,6 +3,7 @@ import { Patient, IPatient } from "./patient";
 import { PatientRegisteredWithDoctor, IPatientRegisteredWithDoctor } from "./PatientRegisteredWithDoctor";
 import { Report, IReport } from "./report";
 import { Specilaization, ISpecialization } from "./Specialization";
+import { DoctorRemarkOnPatientReport, IDoctorRemarkOnPatientReport } from "./DoctorRemarkOnPatientReport";
 
 export {
     Doctor,
@@ -14,5 +15,7 @@ export {
     IPatient,
     IPatientRegisteredWithDoctor,
     IReport,
-    ISpecialization
+    ISpecialization,
+    DoctorRemarkOnPatientReport,
+    IDoctorRemarkOnPatientReport
 }

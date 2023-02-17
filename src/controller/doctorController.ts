@@ -68,4 +68,121 @@ export class DoctorController {
       next(error);
     }
   };
+
+  public getPatientReports = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const doctorId = req["user"]["_id"];
+      const reports = await this.doctorRepository.getPatientReportsRegisteredUnderDoctor(doctorId);
+      res.json({
+        error: false,
+        message: "reports fetched",
+        data: reports
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public provideRemarkOnPatientReport = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const { reportId, consultingRequired, note, firstAidNote } = req.body;
+      const doctorId = req["user"]["_id"];
+
+      if(!reportId || !doctorId) {
+        throw new Error("[reportId/ doctorId is missing]");
+      }
+      const response = await this.doctorRepository.provideRemarkOnPatientReport(doctorId, reportId, consultingRequired, note, firstAidNote);
+      if(!response) {
+        throw new Error("Some error occured");
+      }
+      res.json({
+        error: false,
+        message: "remark added"
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public getAllDoctors = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const doctors = await this.doctorRepository.getAllDoctorsList();
+      res.json({
+        error: false,
+        message: "remark added",
+        data: doctors
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public getNewPatientRequests = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const doctorId = req["user"]["_id"];
+      const requests = await this.doctorRepository.getPatientRequests(doctorId);
+      res.json({
+        error: false,
+        message: "remark added",
+        data: requests
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public approvePatientRequest = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const doctorId = req["user"]["_id"];
+      const { patientId } = req.body;
+      const response = await this.doctorRepository.approvePatientRequests(doctorId, patientId);
+      if(!response) {
+        throw new Error("Some error occured");
+      }
+      res.json({
+        error: false,
+        message: "success"
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public getRegisteredPatients = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const doctorId = req["user"]["_id"];
+      const response = await this.doctorRepository.getRegisteredPatients(doctorId);
+      res.json({
+        error: false,
+        message: "success",
+        data: response
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
