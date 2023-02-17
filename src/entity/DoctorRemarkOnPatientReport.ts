@@ -6,7 +6,8 @@ export interface IDoctorRemarkOnPatientReport {
     reportId: string;
     consultingRequired: boolean;
     note: string;
-    firstAidNote: string
+    firstAidNote: string;
+    reviewdByDoctor: boolean;
 }
 
 const doctorRemarkOnPatientReport = new Schema<IDoctorRemarkOnPatientReport>(
@@ -34,6 +35,10 @@ const doctorRemarkOnPatientReport = new Schema<IDoctorRemarkOnPatientReport>(
         },
         firstAidNote: {
             type: String
+        },
+        reviewdByDoctor: {
+            type: Boolean,
+            default: false
         }
     }
 );
