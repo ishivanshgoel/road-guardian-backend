@@ -47,6 +47,7 @@ export class DoctorController {
       const doctor: IDoctor = await this.doctorRepository.getDoctorByEmail(
         email
       );
+      
       if (!doctor) {
         throw new Error("Invalid email/ password");
       }
@@ -55,8 +56,14 @@ export class DoctorController {
         throw new Error("Invalid email/ password");
       }
 
-      delete doctor.password;
-      const token = generateJwtToken(doctor);
+      doctor.password = undefined;
+
+      const payload = {
+        email: doctor.email,
+        name: doctor.name,
+        specialization: doctor.specialization
+      }
+      const token = generateJwtToken(payload);
       doctor["token"] = token;
 
       res.json({

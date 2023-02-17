@@ -53,8 +53,15 @@ export class PatientController {
         throw new Error("Invalid email/ password");
       }
 
-      delete patient.password;
-      const token = generateJwtToken(patient);
+      patient.password = undefined;
+
+      const payload = {
+        email: patient.email,
+        name: patient.name,
+        deviceId: patient.deviceId
+      }
+
+      const token = generateJwtToken(payload);
       patient["token"] = token;
 
       res.json({
