@@ -13,6 +13,7 @@ export class Server {
             this.PORT = PORT;
             this.putGlobalMiddleWares();
             this.initiateRoutes();
+            this.start();
         }).catch((err) => {
             console.log("Error " + err);
         })
@@ -28,7 +29,7 @@ export class Server {
         this.app.use("/api/v1/doctor", doctorRouter);
     }
 
-    public start() {
+    private start() {
         this.app.listen(this.PORT, () => {
             console.log("Server" + `Running at PORT: ${this.PORT}`);
         })
