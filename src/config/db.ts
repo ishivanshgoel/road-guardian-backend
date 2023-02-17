@@ -1,19 +1,8 @@
-import { MongoClient } from "mongodb";
+import * as Mongoose from "mongoose";
 
 export class DbConnector {
-    private static client: MongoClient;
-
-    private constructor() {
-
-    }
-
     //connect to db
     public static async connect(uri: string) {
-        return await new MongoClient(uri).connect();
-    }
-
-    // to disconnect to database
-    public static async disconnect() {
-        await this.client.close();
+        await Mongoose.connect(uri);
     }
 }
