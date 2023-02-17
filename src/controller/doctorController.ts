@@ -176,13 +176,16 @@ export class DoctorController {
     try {
       const doctorId = req["user"]["_id"];
       const response = await this.doctorRepository.getRegisteredPatients(doctorId);
+      if(!response) {
+        throw new Error("Some error occured");
+      }
       res.json({
         error: false,
-        message: "success",
-        data: response
+        message: "success"
       });
     } catch (error) {
       next(error);
     }
   };
+
 }
