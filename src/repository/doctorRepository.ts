@@ -24,7 +24,7 @@ export class DoctorRepository {
     }
 
     async provideRemarkOnPatientReport(doctorId: string, reportId: string, consultingRequired: boolean, note: string, firstAidNote: string): Promise<boolean> {
-        const response = await DoctorRemarkOnPatientReport.updateOne({ doctorId, reportId }, { consultingRequired, note, firstAidNote });
+        const response = await DoctorRemarkOnPatientReport.updateOne({ doctorId, reportId }, { consultingRequired, note, firstAidNote, reviewedByDoctor: true });
         if(response) return true;
         return false;
     }
@@ -46,7 +46,7 @@ export class DoctorRepository {
     }
 
     async getRegisteredPatients(doctorId: string) : Promise<Array<IPatientRegisteredWithDoctor>> {
-        const response = await PatientRegisteredWithDoctor.find({ doctorId, approvedByDoctor: true });
+        const response = await PatientRegisteredWithDoctor.find({ doctorId, approvedByDoctor: true }).populate('Report');
         return response;
     }
 }
