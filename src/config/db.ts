@@ -1,7 +1,6 @@
 import { MongoClient } from "mongodb";
 
 export class DbConnector {
-    private static uri: string; 
     private static client: MongoClient;
 
     private constructor() {
@@ -10,7 +9,7 @@ export class DbConnector {
 
     //connect to db
     public static async connect(uri: string) {
-        await new MongoClient(this.uri).db("admin").command({ ping: 1 });
+        return await new MongoClient(uri).connect();
     }
 
     // to disconnect to database

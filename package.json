@@ -6,10 +6,8 @@
   "scripts": {
     "build": "tsc --build",
     "clean": "tsc --build --clean",
-    "start": "node ./build/app.js",
-    "dev": "tsc --build && node ./build/app.js",
-    "lambdaTest": "node ./build/test/lambda.js",
-    "cronTest": "node ./build/test/cron.js"
+    "start": "node ./dist/app.js",
+    "dev": "tsc --build && node ./dist/app.js"
   },
   "keywords": [],
   "author": "",

@@ -7,7 +7,9 @@ export class Server {
     private PORT: number;
 
     constructor(PORT: number, dbUri: string) {
+        console.log("connecting to db");
         DbConnector.connect(dbUri).then(() => {
+            console.log("connected to db");
             this.PORT = PORT;
             this.putGlobalMiddleWares();
             this.initiateRoutes();
