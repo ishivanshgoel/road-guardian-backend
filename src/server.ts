@@ -1,6 +1,7 @@
 import express from "express";
-import { doctorRouter, patientRouter } from "./router";
+import { userRouter, reportRouter } from "./router";
 import { DbConnector } from "./config/db";
+import cors from "cors";
 
 export class Server {
     private readonly app = express();
@@ -21,12 +22,13 @@ export class Server {
 
     private putGlobalMiddleWares() {
         this.app.use(express.json());
+        this.app.use(cors());
         this.app.use(express.urlencoded({ extended: true }));
     }
 
     private initiateRoutes() {
-        this.app.use("/api/v1/patient", patientRouter);
-        this.app.use("/api/v1/doctor", doctorRouter);
+        this.app.use("/api/v1/user", userRouter);
+        this.app.use("/api/v1/report", reportRouter);
     }
 
     private start() {

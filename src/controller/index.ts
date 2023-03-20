@@ -1,7 +1,10 @@
-import { DoctorController } from "./doctorController";
-import { PatientController } from "./patientController";
+import { UserController } from "./userController";
+import { ReportController } from "./ReportController";
+
+const userController = new UserController();
+const reportController = new ReportController();
 
 export {
-    DoctorController,
-    PatientController
+    userController,
+    reportController
 }

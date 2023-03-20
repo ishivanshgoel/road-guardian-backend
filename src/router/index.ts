@@ -1,7 +1,6 @@
-import { doctorRouter } from "./doctorRouter";
-import { patientRouter } from "./patientRouter";
-
+import { userRouter } from "./userRouter";
+import { reportRouter } from "./reportRouter";
 export {
-    doctorRouter,
-    patientRouter
+    userRouter,
+    reportRouter
 }
