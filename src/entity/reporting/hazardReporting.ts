@@ -1,39 +1,34 @@
 import { model, Schema } from "mongoose";
 
 export interface IHazardReporting {
-    name:string,
-    number: string;
-    location: string[];
-    username: string;
-    password: string;
-    carNumber: string;
+    reportedBy: string;
+    hazard_location: string[];
+    agency_allocated: string;
+    video_url: string[];
+    verified: boolean;
 }
 
 const hazardReporting = new Schema<IHazardReporting>(
     {
-        name: {
+        reportedBy: {
             type: String,
             required: true
         },
-        number: {
-            type: String,
-            required: true
-        },
-        username: {
-            type: String,
-            required: true
-        },
-        password: {
-            type: String,
-            required: true
-        },
-        location: {
+        hazard_location: {
             type: [String],
             required: true
         },
-        carNumber: {
+        agency_allocated: {
             type: String,
             required: true
+        },
+        video_url: {
+            type: [String],
+            required: true
+        },
+        verified: {
+            type: Boolean,
+            default: false
         }
     }
 );

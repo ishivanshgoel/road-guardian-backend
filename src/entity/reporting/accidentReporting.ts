@@ -6,7 +6,7 @@ export interface IAccidentReporting {
     police_station_allocated: string;
     hospital_allocated: string;
     ambulance_allocated: string;
-    video_url: string;
+    video_url: string[];
     verified: boolean;
 }
 
@@ -33,7 +33,7 @@ const accidentReporting = new Schema<IAccidentReporting>(
             required: true
         },
         video_url: {
-            type: String,
+            type: [String],
             required: true
         },
         verified: {

@@ -1,39 +1,34 @@
 import { model, Schema } from "mongoose";
 
 export interface IRashDrivingReporting {
-    name:string,
-    number: string;
-    location: string[];
-    username: string;
-    password: string;
-    carNumber: string;
+    reportedBy: string;
+    rashDriving_location: string[];
+    police_station_allocated: string;
+    video_url: string[];
+    verified: boolean;
 }
 
 const rashDrivingReporting = new Schema<IRashDrivingReporting>(
     {
-        name: {
+        reportedBy: {
             type: String,
             required: true
         },
-        number: {
-            type: String,
-            required: true
-        },
-        username: {
-            type: String,
-            required: true
-        },
-        password: {
-            type: String,
-            required: true
-        },
-        location: {
+        rashDriving_location: {
             type: [String],
             required: true
         },
-        carNumber: {
+        police_station_allocated: {
             type: String,
             required: true
+        },
+        video_url: {
+            type: [String],
+            required: true
+        },
+        verified: {
+            type: Boolean,
+            default: false
         }
     }
 );
